@@ -91,5 +91,24 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "MySecurity"
+  }
 }
 
+resource "aws_instance" "Wanderlust-Jenkins-Master" {
+    ami = var.ami_id
+    instance_type = var.instance_type
+    key_name = var.key_name
+    security_groups = [aws_security_group.WanderLust_Jenkins_SG.name]
+    tags = {
+        Name = "Jenkins-Automate"
+    }
+     
+    root_block_device {
+        volume_size = 30
+        volume_type = "gp3"
+        delete_on_termination = true
+    }
+}
