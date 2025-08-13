@@ -1,0 +1,46 @@
+
+#First write backend configuration
+terraform {
+
+    required_providers {
+        aws = {
+        source  = "hashicorp/aws"
+        version = "~> 3.0"
+        }
+    }
+
+
+  backend "s3" {
+    bucket = "demo-ecommerce-bucket"
+    key    = "terraform.tfstate"
+    region = "ap-south-1"
+    dynamodb_table = "demo-ecommercetable"
+    encrypt = true
+  }
+}
+
+provider "aws" {
+    region = "ap-south-1"
+  
+}
+
+module "vpc" {
+    source = "C:/Users/Hp/Documents/E-Commerce-Project/backend/modules/vpc"
+
+    vpc_cidr = var.vpc_cidr
+    availability_zones = var.availability_zones
+    private_subnet_cidrs = var.private_subnets_cidrs
+    public_subnet_cidrs = var.public_subnets_cidrs
+    cluster_name = var.cluster_name
+    
+    }
+
+module "eks" {
+    source = "C:/Users/Hp/Documents/E-Commerce-Project/backend/modules/eks"
+
+    cluster_name = var.cluster_name
+    cluster_version = var.cluster_version
+    vpc_id = module.vpc.vpc_id  
+    subnet_ids = module.vpc.private_subnet_ids
+    node_groups = var.node_groups
+    }
