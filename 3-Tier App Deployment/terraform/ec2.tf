@@ -1,3 +1,7 @@
+resource "aws_default_vpc" "default" {
+
+}
+
 resource "aws_security_group" "WanderLust_Jenkins_SG" {
   name        = "WanderLust_SG"
   description = "Allow necessary inbound access"
@@ -41,7 +45,7 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
 
   // Custom TCP range 3000–10000
   ingress {
-    description = "Allow ports 3000–10000 (Node apps, dashboards, etc.)"
+    description = "Allow ports 3000 to 10000"
     from_port   = 3000
     to_port     = 10000
     protocol    = "tcp"
@@ -50,7 +54,7 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
 
   // Custom TCP range 30000–32767 (Kubernetes NodePort)
   ingress {
-    description = "Allow ports 30000–32767 (K8s NodePort)"
+    description = "Allow ports 30000 to 32767"
     from_port   = 30000
     to_port     = 32767
     protocol    = "tcp"
@@ -59,7 +63,7 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
 
   // Custom TCP port 6443 (K8s API Server)
   ingress {
-    description = "Allow port 6443 (K8s API Server)"
+    description = "Allow port 6443 for Kubernetes API Server"
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
