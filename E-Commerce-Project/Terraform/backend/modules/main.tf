@@ -14,7 +14,7 @@ terraform {
     bucket = "gyanvi-ecommerce-bucket"
     key    = "terraform.tfstate"
     region = "ap-south-1"
-    dynamodb_table = "gyanvi-ecommercetable"
+    dynamodb_table = "gyanvi-ecommerce-table"
     encrypt = true
   }
 }
