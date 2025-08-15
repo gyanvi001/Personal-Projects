@@ -4,7 +4,7 @@ provider "aws" {
 
 
 resource "aws_s3_bucket" "tf_state" {
-  bucket = "demo-ecommerce-bucket"
+  bucket = "gyanvi-ecommerce-bucket"
 
   tags = {
     Name        = "Terraform State Bucket"
@@ -21,7 +21,7 @@ resource "aws_s3_bucket_versioning" "tf_state_versioning" {
 }
 
 resource "aws_dynamodb_table" "tf_locks" {
-  name           = "demo-ecommercetable"
+  name           = "gyanvi-ecommerce-table"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "LockID"
 

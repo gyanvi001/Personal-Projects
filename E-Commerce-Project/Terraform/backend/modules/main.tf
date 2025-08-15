@@ -11,10 +11,10 @@ terraform {
 
 
   backend "s3" {
-    bucket = "demo-ecommerce-bucket"
+    bucket = "gyanvi-ecommerce-bucket"
     key    = "terraform.tfstate"
     region = "ap-south-1"
-    dynamodb_table = "demo-ecommercetable"
+    dynamodb_table = "gyanvi-ecommercetable"
     encrypt = true
   }
 }
@@ -25,7 +25,7 @@ provider "aws" {
 }
 
 module "vpc" {
-    source = "C:/Users/Hp/Documents/E-Commerce-Project/backend/modules/vpc"
+    source = "../../modules/vpc"
 
     vpc_cidr = var.vpc_cidr
     availability_zones = var.availability_zones
@@ -36,7 +36,7 @@ module "vpc" {
     }
 
 module "eks" {
-    source = "C:/Users/Hp/Documents/E-Commerce-Project/backend/modules/eks"
+    source = "../../modules/eks"
 
     cluster_name = var.cluster_name
     cluster_version = var.cluster_version
