@@ -25,7 +25,7 @@ provider "aws" {
 }
 
 module "vpc" {
-    source = "../../modules/vpc"
+    source = "./vpc"
 
     vpc_cidr = var.vpc_cidr
     availability_zones = var.availability_zones
@@ -36,7 +36,7 @@ module "vpc" {
     }
 
 module "eks" {
-    source = "../../modules/eks"
+    source = "./eks"
 
     cluster_name = var.cluster_name
     cluster_version = var.cluster_version
