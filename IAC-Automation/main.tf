@@ -2,18 +2,17 @@ provider "aws" {
   region  = "us-west-2"
 }
 
-#Get the default vpc details
+# Get default VPC
 data "aws_vpc" "default" {
-  default  = true
+  default = true
 }
 
-#Get default subnets from the vpc
-data "aws_subnet" "default" {
-    filter {
-        # only return subnets that belong to a specific VPC ID
-        name    = "vpc_id"
-        values  = [data.aws_vpc.default.id]
-    }
+# Get subnets of default VPC
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
 
@@ -59,9 +58,12 @@ resource "aws_security_group" "Web-Sg" {
 resource "aws_instance" "WebServer" {
     ami                = "ami-05f991c49d264708f"
     instance_type      = "t3.xlarge"
-    subnet_id          = data.aws_subnet.default.id
-    security_groups    = [aws_security_group.Web-Sg.name]
-   
+    key_name           = "Jenkins-Server"
+    subnet_id          = data.aws_subnets.default.ids[0] # Use the first subnet from the default subnets
+    vpc_security_group_ids = [aws_security_group.Web-Sg.id]
+
+    user_data = file("userdata.sh")
+
     root_block_device {
     volume_size = 20
     volume_type = "gp2"
