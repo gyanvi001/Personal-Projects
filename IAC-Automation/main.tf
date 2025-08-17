@@ -28,7 +28,7 @@ resource "aws_security_group" "Web-Sg" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = [0.0.0.0/0]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     ingress {
@@ -36,7 +36,7 @@ resource "aws_security_group" "Web-Sg" {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
-        cidr_blocks = [0.0.0.0/0]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     ingress {
@@ -44,20 +44,31 @@ resource "aws_security_group" "Web-Sg" {
         from_port   = 443
         to_port     = 443
         protocol    = "tcp"
-        cidr_blocks = [0.0.0.0/0]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     egress {
         from_port   = 0
         to_port     = 0
         protocol    = "-1"
-        cidr_blocks = [0.0.0.0/0]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
 
 
-
 resource "aws_instance" "WebServer" {
-    type = "t3.xlarge"
+    ami                = "ami-05f991c49d264708f"
+    instance_type      = "t3.xlarge"
+    subnet_id          = data.aws_subnet.default.id
+    security_groups    = [aws_security_group.Web-Sg.name]
+   
+    root_block_device {
+    volume_size = 20
+    volume_type = "gp2"
+    }
+
+  tags = {
+    Name = "terraform-ec2"
+  }
 
 }
