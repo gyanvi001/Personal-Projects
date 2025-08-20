@@ -7,6 +7,7 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
   description = "Allow necessary inbound access"
   vpc_id      = aws_default_vpc.default.id
 
+
   // SSH
   ingress {
     description = "Allow port 22 for SSH access"
@@ -15,6 +16,7 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 
   // HTTP
   ingress {
