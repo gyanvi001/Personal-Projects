@@ -8,7 +8,7 @@ resource "aws_security_group" "WanderLust_Jenkins_SG" {
   vpc_id      = aws_default_vpc.default.id
 
 
-  // SSH
+  // SSH for secure access
   ingress {
     description = "Allow port 22 for SSH access"
     from_port   = 22
