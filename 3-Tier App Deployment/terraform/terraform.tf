@@ -11,6 +11,6 @@ terraform {
 
 # Configure the cloud provider
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-2"
 }
 
